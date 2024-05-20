@@ -126,9 +126,9 @@ const NewInterview = () => {
 
   return (
     <div className="relative flex flex-row h-screen    justify-around bg-gradient-to-br  bg-[#282F54] ">
-      <div className=" max-md:mt-[3.5rem] bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
+      <div className="  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
         <div
-          className="relative rounded min-h-60 h-60 w-full min-w-40 mx-auto "
+          className="relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto "
           style={{ background: "black" }}
         >
           {cam === 1 ? (
@@ -141,7 +141,7 @@ const NewInterview = () => {
             <div></div>
           )}
 
-          <div className="z-0 absolute flex flex-inline bottom-3 left-[43%]">
+          <div className="z-0 absolute flex flex-inline bottom-3 w-full justify-center">
             {mic === 1 ? (
               <div className="mx-3 " onClick={() => handleMic()}>
                 <img
@@ -187,7 +187,7 @@ const NewInterview = () => {
             {/* VIDEO ON */}
           </div>
         </div>
-        <div className="relative rounded mt-0.5 min-h-60 h-60 w-full min-w-40 mx-auto bg-[#2A2D3F]">
+        <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto bg-[#2A2D3F]">
           <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div>
           <img
             src="https://png.pngtree.com/png-vector/20230903/ourmid/pngtree-3d-illustration-avatar-profile-man-png-image_9945214.png"
@@ -195,8 +195,8 @@ const NewInterview = () => {
           />
         </div>
       </div>
-      <div className="bg-black-500  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
-        <div className="customScrollNav flex flex-col rounded h-full  lg:mx-auto  max-[782px]:mt-4 z-10 bg-[#2A2D3F]">
+      <div className="bg-black-500 min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
+        <div className="customScrollNav flex flex-col rounded h-full  lg:mx-auto   z-10 bg-[#2A2D3F]">
           <ReceiverChat Text={"dddf"} />
           <SenderChat Text={"dgjgyjgygyug uf"} editable={edit} />
           <ReceiverChat Text={"ddkhuuubugug  gug ug yg yu gdf"} />

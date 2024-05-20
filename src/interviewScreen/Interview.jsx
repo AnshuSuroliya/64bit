@@ -1,16 +1,14 @@
-import React from 'react'
-import NewInterview from './NewInterview';
-import Timer from './Timer';
+import React from "react";
+import NewInterview from "./NewInterview";
+import Timer from "./Timer";
 
 function Interview() {
   return (
-    <div >
-        {/* <Timer ></Timer> */}
-        <NewInterview ></NewInterview>
-
-
+    <div>
+      <Timer></Timer>
+      <NewInterview></NewInterview>
     </div>
-  )
+  );
 }
 
-export default Interview
+export default Interview;

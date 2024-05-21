@@ -188,15 +188,15 @@ const NewInterview = () => {
           </div>
         </div>
         <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto bg-[#2A2D3F]">
-          <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div>
+          {/* <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div> */}
           <img
-            src="https://png.pngtree.com/png-vector/20230903/ourmid/pngtree-3d-illustration-avatar-profile-man-png-image_9945214.png"
+            src="https://moderncto.io/wp-content/uploads/2018/02/soundwave-e1518895558464.png"
             className=" relative w-full object-contain h-full"
           />
         </div>
       </div>
       <div className="bg-black-500 min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
-        <div className="customScrollNav flex flex-col rounded h-full  lg:mx-auto   z-10 bg-[#2A2D3F]">
+        <div className="overflow-scroll customScrollNav flex flex-col rounded h-full  lg:mx-auto   z-10 bg-[#2A2D3F]">
           <ReceiverChat Text={"dddf"} />
           <SenderChat Text={"dgjgyjgygyug uf"} editable={edit} />
           <ReceiverChat Text={"ddkhuuubugug  gug ug yg yu gdf"} />

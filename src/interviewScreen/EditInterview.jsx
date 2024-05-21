@@ -11,6 +11,7 @@ import SenderChat from "./SenderChat";
 import ReceiverChat from "./ReceiverChat";
 import Visualizer from "../components/Visualizer";
 import NewHomeBackgrounnd from "../components/newHome";
+import Timer from "./Timer";
 
 const EditInterview = () => {
   const webcamRef = useRef(null);
@@ -128,19 +129,19 @@ const EditInterview = () => {
 
   return (
     <div className="relative flex flex-row h-screen    justify-around ">
-        <div className="fixed top-0 left-0 z-[-10]">
-            <NewHomeBackgrounnd/>
-        </div>
+      <div className="fixed top-0 left-0 z-[-10]">
+        <NewHomeBackgrounnd />
+      </div>
       <div className="  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
         <div
-          className="relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto "
+          className="relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto flex"
           style={{ background: "black" }}
         >
           {cam === 1 ? (
             <Webcam
               audio={false}
               ref={webcamRef}
-              className="z-0 w-full object-cover h-full"
+              className=" z-0 w-full object-cover h-[60%] my-auto"
             />
           ) : (
             <div></div>
@@ -192,16 +193,19 @@ const EditInterview = () => {
             {/* VIDEO ON */}
           </div>
         </div>
-        <div id="ttos" className="rounded-full mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto bg-black">
+        <div
+          id="ttos"
+          className="rounded-full mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto bg-black"
+        >
           {/* <img
             src="https://png.pngtree.com/png-vector/20230903/ourmid/pngtree-3d-illustration-avatar-profile-man-png-image_9945214.png"
             className=" relative w-full object-contain h-full"
           /> */}
-          <Visualizer/>
+          <Visualizer />
         </div>
       </div>
       <div className="bg-black-500 min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
-        <div className="customScrollNav flex flex-col rounded h-full  lg:mx-auto   z-10 ">
+        <div className="customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
           <ReceiverChat Text={"dddf"} />
           <SenderChat Text={"dgjgyjgygyug uf"} editable={edit} />
           <ReceiverChat Text={"ddkhuuubugug  gug ug yg yu gdf"} />

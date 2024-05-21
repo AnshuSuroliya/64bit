@@ -2,7 +2,7 @@ import React from "react";
 
 const ReceiverChat = ({ Text }) => {
   return (
-    <div className="relative flex my-1">
+    <div className=" relative flex my-1">
       <div className=" h-full ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@ const ReceiverChat = ({ Text }) => {
       <div className="flex flex-col">
         <div className="text-start text-white ">You</div>
         <div
-          className="text-white text-start  p-3.5 ml-2 mr-7  rounded flex self-start "
+          className="text-white text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
           style={{ overflowWrap: "anywhere" }}
         >
           {Text}

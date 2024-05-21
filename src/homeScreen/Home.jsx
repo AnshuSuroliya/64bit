@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import NewHomeBackgrounnd from "../components/newHome";
 import NewNavbar from "../components/NewNavbar";
 import NewContent from "./NewContent";
+import Footer from "../footer/Footer";
 
 const Home=()=>{
     return(
@@ -14,6 +15,7 @@ const Home=()=>{
             </div>
             <div className="w-full min-h-screen overflow-x-hidden flex flex-col z-50">
                 <NewContent/>
+                <Footer/>
             </div>
         </div>
     )

@@ -3,22 +3,20 @@ import * as dat from "dat.gui";
 import "./visualizer.css";
 
 const Visualizer = () => {
-  let WIDTH=600;
-  let HEIGHT=400;
+  let WIDTH = 600;
+  let HEIGHT = 400;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState('');
-  const [audioUrl, setAudioUrl] = useState('');
+  const [currentQuestion, setCurrentQuestion] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
   let canvas = null;
   let ctx = null;
   let context = null;
   let analyser = null;
   let freqs = null;
 
-  useEffect(async() => {
-    
+  useEffect(async () => {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
-    
   }, []);
 
   const opts = {
@@ -39,7 +37,7 @@ const Visualizer = () => {
   };
 
   // const gui = new dat.GUI();
-  // gui.close(); 
+  // gui.close();
 
   // gui.addColor(opts, "color1");
   // gui.addColor(opts, "color2");
@@ -81,8 +79,10 @@ const Visualizer = () => {
 
     const m = HEIGHT / 2;
     const offset = (WIDTH - 15 * opts.width) / 2;
-    const x = range(15).map(i => offset + channel * opts.shift + i * opts.width);
-    const y = range(5).map(i => Math.max(0, m - scale(i) * freq(channel, i)));
+    const x = range(15).map(
+      (i) => offset + channel * opts.shift + i * opts.width
+    );
+    const y = range(5).map((i) => Math.max(0, m - scale(i) * freq(channel, i)));
     const h = 2 * m;
 
     ctx.beginPath();
@@ -140,15 +140,17 @@ const Visualizer = () => {
     analyser = context.createAnalyser();
     freqs = new Uint8Array(analyser.frequencyBinCount);
     document.querySelector("button").remove();
-  
+
     try {
       const response = await fetch("http://127.0.0.1:8000/question/0");
       const data = await response.json();
       console.log(data);
       if (response.ok) {
         setCurrentQuestion(data.question);
-        const fetchedAudioUrl = await fetch(`http://127.0.0.1:8000${data.audio_url}`);
-        console.log(fetchedAudioUrl);       
+        const fetchedAudioUrl = await fetch(
+          `http://127.0.0.1:8000${data.audio_url}`
+        );
+        console.log(fetchedAudioUrl);
         const arrayBuffer = await fetchedAudioUrl.arrayBuffer();
         console.log("Fetched audio data:", arrayBuffer);
         const audioBuffer = await context.decodeAudioData(arrayBuffer);
@@ -156,10 +158,10 @@ const Visualizer = () => {
         source.buffer = audioBuffer;
         source.connect(analyser);
         source.connect(context.destination);
-        source.start(); 
+        source.start();
         requestAnimationFrame(visualize);
       } else {
-        console.error('Error:', data);
+        console.error("Error:", data);
       }
     } catch (error) {
       console.error("Error fetching or decoding audio data:", error);
@@ -168,7 +170,9 @@ const Visualizer = () => {
   return (
     <div className="mt-16">
       <canvas id="canvas"></canvas>
-      <button onClick={start} className="mt-24">Start</button>
+      <button onClick={start} className="mt-24">
+        Start
+      </button>
     </div>
   );
 };

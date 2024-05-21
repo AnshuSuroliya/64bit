@@ -3,8 +3,8 @@ import * as dat from "dat.gui";
 import "./visualizer.css";
 
 const Visualizer = () => {
-  const WIDTH = 500;
-  const HEIGHT = 400;
+  let WIDTH=600;
+  let HEIGHT=400;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState('');
   const [audioUrl, setAudioUrl] = useState('');
@@ -14,9 +14,11 @@ const Visualizer = () => {
   let analyser = null;
   let freqs = null;
 
-  useEffect(() => {
+  useEffect(async() => {
+    
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
+    
   }, []);
 
   const opts = {
@@ -36,21 +38,21 @@ const Visualizer = () => {
     amp: 1,
   };
 
-  const gui = new dat.GUI();
-  gui.close(); 
+  // const gui = new dat.GUI();
+  // gui.close(); 
 
-  gui.addColor(opts, "color1");
-  gui.addColor(opts, "color2");
-  gui.addColor(opts, "color3");
-  gui.add(opts, "fillOpacity", 0, 1);
-  gui.add(opts, "lineWidth", 0, 10).step(1);
-  gui.add(opts, "glow", 0, 100);
-  gui.add(opts, "blend", ["normal", "multiply", "screen", "overlay", "lighten", "difference"]);
-  gui.add(opts, "smoothing", 0, 1);
-  gui.add(opts, "minDecibels", -100, 0);
-  gui.add(opts, "amp", 0, 5);
-  gui.add(opts, "width", 0, 60);
-  gui.add(opts, "shift", 0, 200);
+  // gui.addColor(opts, "color1");
+  // gui.addColor(opts, "color2");
+  // gui.addColor(opts, "color3");
+  // gui.add(opts, "fillOpacity", 0, 1);
+  // gui.add(opts, "lineWidth", 0, 10).step(1);
+  // gui.add(opts, "glow", 0, 100);
+  // gui.add(opts, "blend", ["normal", "multiply", "screen", "overlay", "lighten", "difference"]);
+  // gui.add(opts, "smoothing", 0, 1);
+  // gui.add(opts, "minDecibels", -100, 0);
+  // gui.add(opts, "amp", 0, 5);
+  // gui.add(opts, "width", 0, 60);
+  // gui.add(opts, "shift", 0, 200);
 
   function range(i) {
     return Array.from(Array(i).keys());
@@ -164,9 +166,9 @@ const Visualizer = () => {
     }
   }
   return (
-    <div className="bg-black h-screen">
+    <div className="mt-16">
       <canvas id="canvas"></canvas>
-      <button onClick={start}>Start</button>
+      <button onClick={start} className="mt-24">Start</button>
     </div>
   );
 };

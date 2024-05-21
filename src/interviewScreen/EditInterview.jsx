@@ -132,16 +132,13 @@ const EditInterview = () => {
       <div className="fixed top-0 left-0 z-[-10]">
         <NewHomeBackgrounnd />
       </div>
-      <div className="  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
-        <div
-          className="relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto flex"
-          style={{ background: "black" }}
-        >
+      <div className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
+        <div className="pt-[45px]  relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
           {cam === 1 ? (
             <Webcam
               audio={false}
               ref={webcamRef}
-              className=" z-0 w-full object-cover h-[60%] my-auto"
+              className=" z-0 w-full h-full object-cover  my-auto"
             />
           ) : (
             <div></div>
@@ -205,17 +202,25 @@ const EditInterview = () => {
         </div>
       </div>
       <div className="bg-black-500 min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
-        <div className="customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
-          <ReceiverChat Text={"dddf"} />
-          <SenderChat Text={"dgjgyjgygyug uf"} editable={edit} />
-          <ReceiverChat Text={"ddkhuuubugug  gug ug yg yu gdf"} />
-
-          <SenderChat Text={"djkhun ih uh uh h u ug ug u uh u u hu uddf"} />
-          <ReceiverChat
+        <div className=" customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
+          <SenderChat
             Text={
-              "dh dfdsf ds fhsd fh sif sd fs dfjsd hf dsf sd fh f dsfksdf kfjlkfdfdsf ldsj fksd fsd jfskdjfhjksdh fkjds fjhdsjh fksdhfjksd fkjshdf jh sdfjhsdjhf sdhfusdh fshd f dsf sdf sd fds fs df sdf ds fds f dsf sd fs df dsf s df dsf s df sdf sd fsd f sd fds fs df "
+              "Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java?"
             }
           />
+
+          <ReceiverChat
+            Text={
+              "having different forms. Like method overloading and overriing are there in java"
+            }
+            editable={edit}
+          />
+
+          <SenderChat Text={"Where is string stored in Java?"} />
+
+          <ReceiverChat Text={"String pool"} />
+
+          <SenderChat Text={"Thanks for taking the test "} />
         </div>
 
         {/* <div className='absolute blur-3xl w-[150px] h-[150px] bg-[#80BD8D] -top-4 right-[2.625rem] '></div>

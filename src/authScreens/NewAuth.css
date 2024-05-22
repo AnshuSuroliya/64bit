@@ -55,7 +55,7 @@ btn {
   transition: transform 1.2s ease-in-out;
 }
 
-btn {
+.btn {
   display: block;
   margin: 0 auto;
   width: 260px;

@@ -203,7 +203,7 @@ const NewAuth = () => {
             )}
             <button
               type="submit"
-              className={`submit ${
+              className={`submit btn ${
                 firstNameValid || lastNameValid || emailValid1 || !valid1
                   ? "opacity-50 btn cursor-not-allowed hover:none"
                   : ""

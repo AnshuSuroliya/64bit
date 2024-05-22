@@ -2,17 +2,24 @@ import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { height } from "@mui/system";
 import { integerPropType } from "@mui/utils";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import NewNavbar from "../components/NewNavbar.jsx"
+import { useNavigate ,useParams} from "react-router-dom";
+import NewNavbar from "../components/NewNavbar.jsx";
+import NewHomeBackgrounnd from "../components/newHome.jsx"
+import axios from "axios";
 
 const Schedule=()=>{
+    let {mock} =useParams();
+
+    const router = useNavigate()
     const [candidateName,setCandidateName]=useState("");
     const [candidateEmail,setCandidateEmail]=useState("");
     const [startTime,setStartTime]=useState(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
-    const [startNow,setStartNow]=useState(false);
+    const [startNow,setStartNow]=useState(mock);
     const [interviewDuration,setInterviewDuration] =useState(20);
     const [currentWindow,setCurrentWindow] =useState("SkillList");
-    const [skills,setSkill] =useState(JSON.parse(localStorage.getItem("SavedData")) || [])
+    const [skills,setSkill] =useState( [])
+
+useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
 
     const options = [
         "HTML",
@@ -28,13 +35,22 @@ const Schedule=()=>{
     //NewSkillModal && UpdateSkilModal Starts Here-----------------
     const [question,setQuestion]=useState()
     const [newQuestion,setNewQuestion] =useState(false);
-    const [skillInput,setSkillInput]=useState({name:" ",experience:0,questions:[] })
+    const [skillInput,setSkillInput]=useState({name:" ",experience:0,totalQuestion:3,questions:[] })
     const [currentIndex,setCurrentIndex]=useState(0);
+
+    function verifyEmail(e) {
+        console.log(e.target.value);
+        const display = document.querySelector("#emailError");
+        if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]{2,6}$/.test(e.target.value)==false) {
+          display.hidden =false; console.log("incorrect");} else {
+          display.hidden=true; console.log("corret");
+        }
+    }
 
     const changeExperience=(i)=>{
         if(skillInput.experience>=25 && i>0)return;
         if(skillInput.experience<=0 && i<0)return;
-        setSkillInput({experience:skillInput.name,experience:skillInput.experience+i,questions:skillInput.questions});
+        setSkillInput({name:skillInput.name,experience:skillInput.experience+i,questions:skillInput.questions});
     }
 
     const saveInLocalStorage=(temp)=>{
@@ -42,27 +58,39 @@ const Schedule=()=>{
         localStorage.setItem("SavedData",savedData);
     }
 
-    const addQuestion=()=>{
-        let questionError = question.length<2
+    const addQuestion=async ()=>{
+        let questionError = question==null || question.length<2
 
-       
+        try{
+            const {data} = await axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/chk/IsQuestionReleveant',
+            data: {"question": question , "skill":skillInput.name}
+            })
+            console.log(data);
+            if(data["isRelevant"]=="False" || data["isRelevant"]==false)questionError =true;
 
-        if(question.length <1){
+            if(questionError){
+                document.getElementById("questionErrorElement").hidden =false;
+                return;
+            }
+        }catch(error){
             document.getElementById("questionErrorElement").hidden =false;
             return;
         }
+        
 
 
         document.getElementById("questionErrorElement").hidden =true;
         let temp =skillInput;
-        temp.questions.push(question);
+        temp.questions.push({question:question});
         setSkillInput(temp);
         setQuestion("");
         setNewQuestion(false);
     }
     
     const AddNewSkill=()=>{
-        console.log(skills)
+        console.log(skillInput)
         let ShowError =skillInput.name.length<2;
 
         for(let i=0;i<skills.length;i++){
@@ -73,6 +101,8 @@ const Schedule=()=>{
             document.getElementById("SkillSelector").classList.add("border-red-400")
         return;
         }
+
+        if(skillInput.questions.length!=0){skillInput.totalQuestion =skillInput.questions.length}
 
         else{document.getElementById("SkillSelector").classList.remove("border-red-400")}
        
@@ -135,9 +165,9 @@ const Schedule=()=>{
                 <div className="w-auto overflow-scroll mb-2">
                     {skillInput.questions.map((question, index) => {
                                     return (
-                                        <div className="w-full relative">
-                                            <button type="button" className="bg-red-300 p-1 absolute top-1 rounded-full right-1 text-xs" onClick={()=>DeleteQuestion(index)}>🗑️+{index}</button>
-                                            <div style={{overflowWrap:"anywhere"}}  key={index} className="bg-gray-100 rounded-lg text-md font-semibold my-3 h-auto text-start p-2 pe-4" >{skillInput.questions[index]}</div>
+                                        <div key={index} className="w-full relative">
+                                            <button type="button" className="bg-red-300 p-1 absolute top-1 rounded-full right-1 text-xs" onClick={()=>DeleteQuestion(index)}>🗑️</button>
+                                            <div style={{overflowWrap:"anywhere"}}  key={index} className="bg-gray-100 rounded-lg text-md font-semibold my-3 h-auto text-start p-2 pe-4" >{skillInput.questions[index].question}</div>
                                         </div>
                                     );
                     })}
@@ -196,7 +226,7 @@ const Schedule=()=>{
                 <div className="w-auto overflow-scroll mb-2">
                     {skillInput.questions.map((question, index) => {
                                     return (
-                                        <div  key={index} className="bg-gray-100 rounded-lg text-md font-semibold my-3 h-auto text-start px-3" >{skillInput.questions[index]}</div>
+                                        <div  key={index} className="bg-gray-100 rounded-lg text-md font-semibold my-3 h-auto text-start px-3" >{skillInput.questions[index].question}</div>
                                     );
                     })}
                 </div>
@@ -249,6 +279,25 @@ const Schedule=()=>{
         saveInLocalStorage(temp);
     }
 
+    const ScheduleInterview=async ()=>{
+        if(mock==="true"){
+            setStartTime(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0])
+        }
+        const req = { candidate_name:candidateName , candidate_email : candidateEmail , start_time:startTime , duration:interviewDuration,  skills};
+        console.log(req)
+        const {data} = await axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/interview/schedule',
+            data: req
+        })
+
+        if(data=="False" || data==false){
+            return;
+        }else{
+           router("/") 
+        }
+    }
+
 
     function skillList(){
         return(
@@ -269,20 +318,33 @@ const Schedule=()=>{
 
 
     return(
-        <div className="w-full h-screen bg-gradient-to-br from-[#282f54] to-[#422f66] font-mono">
-            <NewNavbar/>
-            <div className="w-10/12 h-[500px] rounded-lg bg-white  mx-auto  p-4 px-6">
+        <div className="w-full h-screen font-mono flex">
+            <div className="fixed top-0 left-0 z-0">
+                <NewHomeBackgrounnd/>
+            </div>
+            <div className="fixed top-0 left-0">
+                <NewNavbar/>
+            </div>
+            <div className="w-10/12 h-[500px] rounded-lg bg-white  mx-auto mt-[100px]  p-4 px-6 z-[10]">
                 <h2 className="text-3xl font-bold">Schedule Interview</h2>
                 
-                <form id="skillList" onSubmit="#" className="mx-auto py-4 px-2 h-[410px]" method="POST">   
+                <div id="skillList" className="mx-auto py-4 px-2 h-[410px]">   
                     <div className="flex w-full h-full px-4 mb-2">
                         <div id="generalInformationModal" className="border-r-[1px] px-2 py-2 w-6/12 h-full">
-                            <input type="text" className="w-full ps-6 py-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold" placeholder="Candidate Name" value={candidateName} onChange={(e)=>{setCandidateName(e.target.value)}} />
-                            <input type="text" className="w-full ps-6 py-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold" placeholder="Candidate Email" value={candidateEmail} onChange={(e)=>{setCandidateEmail(e.target.value)}} />
+                            <p hidden={true} className="text-red-500 text-md text-start" id="nameError">Only alphabates and space is allowed!</p>
+                            <input type="text" className="w-full ps-6 py-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold" placeholder="Candidate Name" value={candidateName} onChange={(e)=>{setCandidateName(e.target.value);}} />
+                            <p hidden={true} className="text-red-500 text-md text-start" id="emailError">Incorrect Email</p>
+                            <input type="text" className="w-full ps-6 py-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold" placeholder="Candidate Email" value={candidateEmail} onChange={(e)=>{setCandidateEmail(e.target.value);verifyEmail(e)}} />
                             
-                            <div hidden={startNow} className="flex w-full ">
-                                <input type="datetime-local" className="px-3 w-3/4 py-2 me-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold disabled:text-gray-200 transition-all tracking-widest" value={startTime} onChange={(e)=>{setStartTime(e.target.value);console.log(e.target.value)}} />
-                            </div>
+                            {
+                                mock==="false"?
+                                <div className="flex w-full ">
+                                    <input type="datetime-local" className="px-3 w-3/4 py-2 me-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold disabled:text-gray-200 transition-all tracking-widest" value={startTime} onChange={(e)=>{setStartTime(e.target.value);console.log(e.target.value)}} />
+                                </div>
+                                :
+                                <></>
+                            }
+                            
 
                             <div className="flex w-full mb-3">
                                     <p className="text-2xl font-semibold" >Duration : </p>
@@ -303,9 +365,9 @@ const Schedule=()=>{
                              
                     </div>  
                     
-                    <button hidden={currentWindow!="SkillList"}  type="Submit" className="mt-auto mx-auto px-3 py-1 bg-[#006D77] w-[100px] rounded-md text-lg font-semibold text-gray-50">Schedule</button>
+                    <button hidden={currentWindow!="SkillList"} type="button" onClick={ScheduleInterview} className="mt-auto mx-auto px-3 py-1 bg-[#006D77] w-[100px] rounded-md text-lg font-semibold text-gray-50">Schedule</button>
                         
-                </form>
+                </div>
             </div>
         </div>
     )

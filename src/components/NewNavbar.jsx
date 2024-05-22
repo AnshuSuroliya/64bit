@@ -1,16 +1,26 @@
-import $ from "jquery";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect} from "react";
+import {useNavigate ,Link} from 'react-router-dom';
 
 const NewNavbar = () => {
+  const navigate = useNavigate();
   let characters = null;
   let index = 0;
   const [topActive, setTopActive] = useState(window.innerWidth >= 768);
   const [sideActive, setSideActive] = useState(false);
 
   window.onresize = (e) => {
-    setTopActive(window.innerWidth >= 768);
+    if(topActive==true && window.innerWidth <= 768){
+      setTopActive(false);
+    }
+    else if(topActive==false && window.innerWidth >= 768){
+      setTopActive(true);
+    }
   };
+
+   function goTo(path){
+        navigate(path);
+    }
 
   useEffect(() => {
     let doc = document.getElementById("logo");
@@ -38,21 +48,22 @@ const NewNavbar = () => {
       {topActive ? (
         <div className="mx-auto flex">
           <div className="my-[15px] w-[150px] text-lg text-white hover:cursor-pointer flex flex-col group/baap">
-            <button className="text-md group-hover/baap:text-xl transition-all duration-400">
+            <Link to="/schedule/false" className="text-md group-hover/baap:text-xl transition-all duration-400">
               Schedule Now
-            </button>
+            </Link>
             <div className="w-0 ms-[15px] h-[2px] bg-gradient-to-r from-red-500 to-indigo-500 group-hover/baap:w-[120px] shadow-[0_35px_35px_rgba(255,255,255,1)] transition-all duration-400"></div>
           </div>
           <div className="my-[15px] w-[150px] text-lg text-white hover:cursor-pointer flex flex-col group/baap">
-            <button className="text-md group-hover/baap:text-xl transition-all duration-400">
+            <Link to="/schedule/true" className="text-md group-hover/baap:text-xl transition-all duration-400">
               Start Mock
-            </button>
+            </Link>
             <div className="w-0 ms-[25px] h-[2px] bg-gradient-to-r from-red-500 to-indigo-500 group-hover/baap:w-[100px] transition-all duration-400"></div>
           </div>
 
-          <div
+          <Link
             id="logo"
             className="flex mx-auto hover:cursor-pointer text-white text-2xl py-2"
+            to="/"
           >
             <p className="my-auto transtion-all duration-200">D</p>
             <p className="my-auto transtion-all duration-200">O</p>
@@ -62,7 +73,7 @@ const NewNavbar = () => {
             <p className="my-auto transtion-all duration-200">M</p>
             <p className="my-auto transtion-all duration-200">O</p>
             <p className="my-auto transtion-all duration-200">N</p>
-          </div>
+          </Link>
 
           <div className="my-[15px] w-[150px] text-lg text-white hover:cursor-pointer flex flex-col group/baap">
             <button className="text-md group-hover/baap:text-xl transition-all duration-400">

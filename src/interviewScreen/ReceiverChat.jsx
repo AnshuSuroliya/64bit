@@ -23,10 +23,13 @@ const ReceiverChat = ({ Text }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="text-start text-black ">You</div>
+        <div className="text-start text-white ">You</div>
         <div
-          className=" text-black text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
-          style={{ overflowWrap: "anywhere", boxShadow: "0 0 8px 0 #474049" }}
+          className=" text-white text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
+          style={{
+            overflowWrap: "anywhere",
+            boxShadow: "#9c6aab 4px 3px 13px 0px",
+          }}
         >
           <img
             width="20"

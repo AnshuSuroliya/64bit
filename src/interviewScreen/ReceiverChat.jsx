@@ -11,7 +11,7 @@ const ReceiverChat = ({ Text }) => {
           fill="none"
           viewBox="0 0 24 24"
           className="icon-sm rounded-xl p-[4px] mx-2"
-          style={{ background: "rgb(121,137,255)" }}
+          style={{ background: "#543c67" }}
         >
           <path
             fill="white"
@@ -23,9 +23,9 @@ const ReceiverChat = ({ Text }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="text-start text-white ">You</div>
+        <div className="text-start text-black ">You</div>
         <div
-          className="text-white text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
+          className="text-black text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
           style={{ overflowWrap: "anywhere" }}
         >
           {Text}

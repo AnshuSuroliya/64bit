@@ -132,7 +132,7 @@ const EditInterview = () => {
       <div className="fixed top-0 left-0 z-[-10]">
         <NewHomeBackgrounnd />
       </div>
-      <div className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
+      <div className="relative ml-5 bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
         <div className="pt-[45px]  relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
           {cam === 1 ? (
             <Webcam
@@ -201,11 +201,11 @@ const EditInterview = () => {
           <Visualizer />
         </div>
       </div>
-      <div className="bg-black-500 min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
+      <div className="bg-white min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
         <div className=" customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
           <SenderChat
             Text={
-              "Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java?"
+              "Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java?"
             }
           />
 

@@ -7,6 +7,8 @@ import NewHomeBackgrounnd from "../components/newHome";
 import VisualizerCopy from "../components/Visualizeropy";
 import { useDispatch, useSelector } from "react-redux";
 import { interviewQuestion } from "../reducers/interviewReducer";
+import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 const speechsdk = require('microsoft-cognitiveservices-speech-sdk');
 
 const Main = () => {
@@ -92,8 +94,7 @@ const Main = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); 
-
+        setLoading(true);
         const req = {
             prevMessages: response.messages,
             answer: recognizedText,
@@ -125,7 +126,16 @@ const Main = () => {
         setShowSpeakButton(true)// Stop loader
         setInterviewStarted(true);
     };
-
+    const navigate=useNavigate()
+    const pop=()=>{
+        swal({
+            text:"Thank you! Your Interview is now Completed,You can view your results!",
+            icon:"success"
+        }
+        ).then(()=>{
+            navigate("/report")
+        })
+    }
     return (
         <div className="w-full min-h-screen flex items-center">
             <div className="fixed top-0 left-0 z-[-10]">
@@ -205,6 +215,9 @@ const Main = () => {
                             Start Interview
                         </Button>
                     )}
+                    {
+                        response.final ? <div>{pop()}</div> : <div></div>
+                    }
                 </div>
             </div>
         </div>

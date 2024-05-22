@@ -148,7 +148,10 @@ const EditInterview = () => {
         {/* <div className="fixed top-0 left-0 z-[-10]">
         <NewHomeBackgrounnd />
       </div> */}
-        <div className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
+        <div
+          className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  "
+          style={{ borderRight: "inset" }}
+        >
           <div className="pt-[45px] bg-black relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
             {cam === 1 ? (
               <Webcam
@@ -224,7 +227,7 @@ const EditInterview = () => {
                   
           <Visualizer />
         </div> */}
-          <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto ">
+          <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 bg-[#0b0710] w-full min-w-40 mx-auto ">
             {/* <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div> */}
             <img
               src="https://moderncto.io/wp-content/uploads/2018/02/soundwave-e1518895558464.png"
@@ -232,7 +235,7 @@ const EditInterview = () => {
             />
           </div>
         </div>
-        <div className="bg-white min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
+        <div className="bg-black min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
           <div className="relative customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
             <SenderChat
               Text={
@@ -249,15 +252,19 @@ const EditInterview = () => {
               editable={edit}
             />
 
-            <div className="absolute w-[100%]  min-h-[90px] max-h-[125px] h-full bg-black bottom-0 flex flex-row">
-              <div className="basis-1/4 bg-[#ffab12]"></div>
+            <div
+              className="absolute w-[100%] abc   bg-black text-start bottom-3 flex flex-row"
+              style={{ flexGrow: "1" }}
+            >
+              {/* <div className="basis-1/4 bg-[#ffab12]"></div> */}
               <div
                 role="textbox"
                 aria-multiline="true"
                 contenteditable="true"
-                className=" h-[90%] my-auto basis-2/4 bg-[#ffffff] overflow-auto"
+                style={{ boxShadow: "#9c6aab 4px 3px 0px 1px" }}
+                className="outline-0 rounded-1  w-[90%] min-h-[50px] max-h-[125px] ml-[28px] mr-[8px] my-auto bg-[#ffffff] overflow-auto"
               ></div>
-              <div className="basis-1/4 bg-[#ffab12]"></div>
+              s{/* <div className="basis-1/4 bg-[#ffab12]"></div> */}
             </div>
           </div>
         </div>

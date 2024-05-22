@@ -1,25 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const interviewQuestion=createAsyncThunk("interviewQuestion",async(data,{rejectWithValue})=>{
-    const response=await fetch("http://127.0.0.1:8000/interview",{
+    const response=await fetch("http://127.0.0.1:8000/ask",{
         method:"POST",
         headers:{
-            "Authorization":`Bearer ${localStorage.getItem("jwt")}`,
             "Content-Type":"application/json",
         },
         body:JSON.stringify(data)
     });
     try{
         const result=await response.json();
-        localStorage.setItem("signup",result.success)
+        localStorage.setItem("audio",result.audio_url)
         console.log(result);
         return result;
     } catch(error){
             rejectWithValue(error);
     }
 })
+
 const interviewSlice=createSlice({
     name:"interviewSlice",
+    isLoading:false,
     initialState:{
        questionsData:[]
     },

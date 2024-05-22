@@ -45,7 +45,7 @@ const Content = () => {
           </h1>
         </div>
         <Link
-          className="px-3 py-2 text-white border-blue-200 border-2 w-[150px] rounded-lg z-[100]"
+          className="px-3 py-2 text-white border-blue-200 border-2 w-[150px] rounded-lg z-[100] hover:shadow-[4px_4px_1px_-0px_rgba(255,255,255,1)]"
           to="/schedule"
         >
           Schedule Now

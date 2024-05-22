@@ -31,6 +31,18 @@ const EditInterview = () => {
   const audioChunk = useRef([]);
   const [file, setFile] = useState(null);
   const mediaRecorderRef = useRef(null);
+  const [end, setEnd] = useState(false);
+
+  const [start, setStart] = useState(false);
+
+  const toggleStart = () => {
+    if (start) {
+      setEnd(!end);
+    } else {
+      setStart(!start);
+    }
+  };
+
   const addAudioElement = (blob) => {
     const url = URL.createObjectURL(blob);
     const audio = document.createElement("audio");
@@ -87,10 +99,12 @@ const EditInterview = () => {
   const handleCam = () => {
     setCam(1 - cam);
   };
+
   const handleFile = (e) => {
     const files = e.target.files[0];
     setFile(files);
   };
+
   const handleSubmit = async () => {
     var myBlob = new Blob([blob], { type: "audio/wav" });
     console.log(myBlob);
@@ -128,69 +142,77 @@ const EditInterview = () => {
   // const enableWebcam = () => this.setState({ webcamEnabled: true });
 
   return (
-    <div className="relative flex flex-row h-screen    justify-around ">
-      <div className="fixed top-0 left-0 z-[-10]">
+    <div>
+      <Timer onclick={toggleStart} start={start} end={end}></Timer>
+      <div className="relative flex flex-row h-screen    justify-around ">
+        {/* <div className="fixed top-0 left-0 z-[-10]">
         <NewHomeBackgrounnd />
-      </div>
-      <div className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
-        <div className="pt-[45px] bg-black relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
-          {cam === 1 ? (
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              className=" z-0 w-full h-full object-cover   my-auto"
-            />
-          ) : (
-            <div></div>
-          )}
-
-          <div className="z-0 absolute flex flex-inline bottom-3 w-full justify-center">
-            {mic === 1 ? (
-              <div className="mx-3 " onClick={() => handleMic()}>
-                <img
-                  width="16"
-                  height="16"
-                  src="https://img.icons8.com/tiny-color/16/microphone.png"
-                  alt="microphone"
-                />
-              </div>
-            ) : (
-              <div className="mx-3" onClick={() => handleMic()}>
-                <img
-                  width="16"
-                  height="16"
-                  src="https://img.icons8.com/tiny-color/16/block-microphone.png"
-                  alt="block-microphone"
-                />
-              </div>
-            )}
-
+      </div> */}
+        <div className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
+          <div className="pt-[45px] bg-black relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
             {cam === 1 ? (
-              <div className=" " onClick={() => handleCam()}>
-                <img
-                  width="18"
-                  height="18"
-                  src="https://img.icons8.com/ios-filled/50/228BE6/video-call.png"
-                  alt="video-call"
-                />
-              </div>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                className=" z-0 w-full h-full object-cover   my-auto"
+              />
             ) : (
-              <div className=" " onClick={() => handleCam()}>
-                <img
-                  width="18"
-                  height="18"
-                  src="https://img.icons8.com/color-glass/48/no-video.png"
-                  alt="no-video"
-                />
-              </div>
+              <div></div>
             )}
 
-            {/* VIDEO OFF*/}
+            <div className="z-0 absolute flex flex-inline bottom-3 w-full justify-center">
+              {mic === 1 ? (
+                <div
+                  className="mx-3 cursor-pointer"
+                  onClick={() => handleMic()}
+                >
+                  <img
+                    width="16"
+                    height="16"
+                    src="https://img.icons8.com/tiny-color/16/microphone.png"
+                    alt="microphone"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="mx-3 cursor-pointer"
+                  onClick={() => handleMic()}
+                >
+                  <img
+                    width="16"
+                    height="16"
+                    src="https://img.icons8.com/tiny-color/16/block-microphone.png"
+                    alt="block-microphone"
+                  />
+                </div>
+              )}
 
-            {/* VIDEO ON */}
+              {cam === 1 ? (
+                <div className="cursor-pointer " onClick={() => handleCam()}>
+                  <img
+                    width="18"
+                    height="18"
+                    src="https://img.icons8.com/ios-filled/50/228BE6/video-call.png"
+                    alt="video-call"
+                  />
+                </div>
+              ) : (
+                <div className="cursor-pointer " onClick={() => handleCam()}>
+                  <img
+                    width="18"
+                    height="18"
+                    src="https://img.icons8.com/color-glass/48/no-video.png"
+                    alt="no-video"
+                  />
+                </div>
+              )}
+
+              {/* VIDEO OFF*/}
+
+              {/* VIDEO ON */}
+            </div>
           </div>
-        </div>
-        {/* <div
+          {/* <div
           id="ttos"
           className="rounded-full mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto bg-black"
         >
@@ -202,43 +224,43 @@ const EditInterview = () => {
                   
           <Visualizer />
         </div> */}
-        <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto ">
-          {/* <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div> */}
-          <img
-            src="https://moderncto.io/wp-content/uploads/2018/02/soundwave-e1518895558464.png"
-            className=" relative w-[90%]  object-contain h-[90%] mx-auto my-auto"
-          />
+          <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto ">
+            {/* <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div> */}
+            <img
+              src="https://moderncto.io/wp-content/uploads/2018/02/soundwave-e1518895558464.png"
+              className=" relative w-[90%]  object-contain h-[90%] mx-auto my-auto"
+            />
+          </div>
         </div>
-      </div>
-      <div className="bg-white min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
-        <div className=" customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
-          <SenderChat
-            Text={
-              "Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java?"
-            }
-          />
+        <div className="bg-white min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
+          <div className="relative customScrollNav flex flex-col rounded h-full mt-[42px]  lg:mx-auto   z-10 ">
+            <SenderChat
+              Text={
+                "Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java? Hey! I'm Doraemon. Let's start the interview.\n What is polymorphism in Java?"
+              }
+            />
 
-          {/* <div className="w-[90%] h-[2px] bg-[#000000] mx-[4px]"></div> */}
+            {/* <div className="w-[90%] h-[2px] bg-[#000000] mx-[4px]"></div> */}
 
-          <ReceiverChat
-            Text={
-              "having different forms. Like method overloading and overriing are there in java"
-            }
-            editable={edit}
-          />
+            <ReceiverChat
+              Text={
+                "having different forms. Like method overloading and overriing are there in java"
+              }
+              editable={edit}
+            />
 
-          {/* <div className="w-[90%] h-[2px] bg-[#000000] mx-[4px]"></div> */}
-
-          {/* <SenderChat Text={"Where is string stored in Java?"} />
-
-          <ReceiverChat Text={"String pool"} />
-
-          <SenderChat Text={"Thanks for taking the test "} /> */}
+            <div className="absolute w-[100%]  min-h-[90px] max-h-[125px] h-full bg-black bottom-0 flex flex-row">
+              <div className="basis-1/4 bg-[#ffab12]"></div>
+              <div
+                role="textbox"
+                aria-multiline="true"
+                contenteditable="true"
+                className=" h-[90%] my-auto basis-2/4 bg-[#ffffff] overflow-auto"
+              ></div>
+              <div className="basis-1/4 bg-[#ffab12]"></div>
+            </div>
+          </div>
         </div>
-
-        {/* <div className='absolute blur-3xl w-[150px] h-[150px] bg-[#80BD8D] -top-4 right-[2.625rem] '></div>
-
-  <div className='absolute blur-3xl w-[150px] h-[150px] bg-[#80BD8D] -bottom-4 right-[2.625rem]  '></div>  */}
       </div>
     </div>
   );

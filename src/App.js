@@ -18,7 +18,7 @@ function App() {
        <Route path='' element={<Home/>}/>
        <Route path='/login' element={<Login/>}/>
        <Route path='/signup' element={<Register/>}/>
-       <Route path='/schedule' element={<Schedule/>}/>
+       <Route path='/schedule/:mock' element={<Schedule/>}/>
        <Route path='/interview' element={<NewInterview/>}/>
        
        <Route path='/test' element={<Interview/>}/>

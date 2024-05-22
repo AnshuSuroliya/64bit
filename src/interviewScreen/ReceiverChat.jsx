@@ -2,7 +2,7 @@ import React from "react";
 
 const ReceiverChat = ({ Text }) => {
   return (
-    <div className=" relative flex my-1">
+    <div className=" relative flex my-1 mb-3">
       <div className=" h-full ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,7 @@ const ReceiverChat = ({ Text }) => {
           height="24"
           fill="none"
           viewBox="0 0 24 24"
-          className="icon-sm rounded-xl p-[4px] mx-2"
+          className="h-[24px] w-[24px] min-w-[24px] rounded-2xl p-1"
           style={{ background: "#543c67" }}
         >
           <path
@@ -25,9 +25,16 @@ const ReceiverChat = ({ Text }) => {
       <div className="flex flex-col">
         <div className="text-start text-black ">You</div>
         <div
-          className="text-black text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
-          style={{ overflowWrap: "anywhere" }}
+          className=" text-black text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
+          style={{ overflowWrap: "anywhere", boxShadow: "0 0 8px 0 #474049" }}
         >
+          <img
+            width="20"
+            height="20"
+            src="https://img.icons8.com/quill/50/arrow.png"
+            alt="arrow"
+            className="top-0 h-[20px] "
+          />
           {Text}
         </div>
       </div>

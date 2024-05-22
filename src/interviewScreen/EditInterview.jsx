@@ -132,13 +132,13 @@ const EditInterview = () => {
       <div className="fixed top-0 left-0 z-[-10]">
         <NewHomeBackgrounnd />
       </div>
-      <div className="relative ml-5 bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
-        <div className="pt-[45px]  relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
+      <div className="relative  bg-white-500 justify-between basis-1/4 h-full my-auto  flex flex-col my-2  ">
+        <div className="pt-[45px] bg-black relative rounded basis-2/4 min-h-[250px] w-full min-w-40 mx-auto ">
           {cam === 1 ? (
             <Webcam
               audio={false}
               ref={webcamRef}
-              className=" z-0 w-full h-full object-cover  my-auto"
+              className=" z-0 w-full h-full object-cover   my-auto"
             />
           ) : (
             <div></div>
@@ -190,15 +190,24 @@ const EditInterview = () => {
             {/* VIDEO ON */}
           </div>
         </div>
-        <div
+        {/* <div
           id="ttos"
           className="rounded-full mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto bg-black"
         >
-          {/* <img
-            src="https://png.pngtree.com/png-vector/20230903/ourmid/pngtree-3d-illustration-avatar-profile-man-png-image_9945214.png"
-            className=" relative w-full object-contain h-full"
-          /> */}
+        <img
+          src="https://png.pngtree.com/png-vector/20230903/ourmid/pngtree-3d-illustration-avatar-profile-man-png-image_9945214.png"
+          className=" relative w-full object-contain h-full"
+        />
+
+                  
           <Visualizer />
+        </div> */}
+        <div className="relative rounded mt-0.5 min-h-[250px] basis-2/4 w-full min-w-40 mx-auto ">
+          {/* <div className="absolute top-[30%] left-[40%] bg-[#45E856] blur-3xl h-20 w-20"></div> */}
+          <img
+            src="https://moderncto.io/wp-content/uploads/2018/02/soundwave-e1518895558464.png"
+            className=" relative w-[90%]  object-contain h-[90%] mx-auto my-auto"
+          />
         </div>
       </div>
       <div className="bg-white min-h-[500px]  relative justify-around h-full basis-3/4 flex flex-col  my-auto mx-auto ">
@@ -209,6 +218,8 @@ const EditInterview = () => {
             }
           />
 
+          {/* <div className="w-[90%] h-[2px] bg-[#000000] mx-[4px]"></div> */}
+
           <ReceiverChat
             Text={
               "having different forms. Like method overloading and overriing are there in java"
@@ -216,11 +227,13 @@ const EditInterview = () => {
             editable={edit}
           />
 
-          <SenderChat Text={"Where is string stored in Java?"} />
+          {/* <div className="w-[90%] h-[2px] bg-[#000000] mx-[4px]"></div> */}
+
+          {/* <SenderChat Text={"Where is string stored in Java?"} />
 
           <ReceiverChat Text={"String pool"} />
 
-          <SenderChat Text={"Thanks for taking the test "} />
+          <SenderChat Text={"Thanks for taking the test "} /> */}
         </div>
 
         {/* <div className='absolute blur-3xl w-[150px] h-[150px] bg-[#80BD8D] -top-4 right-[2.625rem] '></div>

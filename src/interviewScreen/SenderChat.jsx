@@ -31,7 +31,7 @@ const SenderChat = ({ Text }) => {
         <div className="text-start text-black ">Doraemon</div>
         <div
           className=" text-black text-start font-sans  p-3.5 ml-2 mr-7  rounded flex self-start "
-          style={{ overflowWrap: "anywhere" }}
+          style={{ overflowWrap: "anywhere", boxShadow: "0 0 8px 0 #474049" }}
         >
           <img
             width="20"

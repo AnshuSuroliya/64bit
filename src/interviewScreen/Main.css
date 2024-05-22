@@ -1,12 +1,11 @@
-
-.customScrollNav:hover::-webkit-scrollbar{
-    display: none;
+.customScrollNav:hover::-webkit-scrollbar {
+  display: none;
 }
 
-.customScrollNav:hover{
-    overflow-y: auto;
+.customScrollNav:hover {
+  overflow-y: auto;
 }
 
-.customScrollNav{
-    overflow-y: hidden;
+.customScrollNav {
+  overflow-y: hidden;
 }

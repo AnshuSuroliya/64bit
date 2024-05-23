@@ -253,7 +253,7 @@ function InterviewEditCopy() {
             />
 
             <div
-              className="absolute w-[100%] abc   bg-black text-start bottom-3 flex flex-row"
+              className="absolute w-[100%] abc   bg-black text-start bottom-[9px] flex flex-row"
               style={{ flexGrow: "1" }}
             >
               {/* <div className="basis-1/4 bg-[#ffab12]"></div> */}

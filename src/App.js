@@ -11,8 +11,8 @@ import Interview from './interviewScreen/Interview';
 import EditInterview from './interviewScreen/EditInterview';
 import Report from './reportPage/Report';
 import Main from './interviewScreen/Main';
-import ProtectedRoute from './ProtectedRoute';
 import AuthProtected from './AuthProtected';
+import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
        <Route path='/interview/:interview_id' element={<Main/>}/>
        <Route path='/report' element={<Report/>}/>
        </Route>
-       <Route path="/test" element={<EditInterview/>}/>
      </Routes>
      </BrowserRouter>
     </div>

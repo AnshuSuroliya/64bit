@@ -35,7 +35,38 @@ function InterviewEditCopy() {
 
   const [start, setStart] = useState(false);
 
-  const toggleStart = () => {
+
+  //////////////////////////////////////////////////////
+
+  const [micColor,setMicColor] = useState('#ba8ccd');
+
+  const [senderChat,setSenderChat] = useState("");
+  const [receiverChat,setReceiverChat] = useState("");
+  
+  
+
+  const onMicClick=()=>{
+    if(micColor==="#ff5858"){
+      setMicColor('#ba8ccd')
+    }else{
+      setMicColor("#ff5858")
+    }
+    
+  }
+
+  const onSend=(event)=>{
+    setReceiverChat(document.getElementById('fun').innerText);
+    
+    document.getElementById('fun').innerText=""
+
+
+
+  }
+
+
+  ///////////////////////////////////////////
+
+ const toggleStart = () => {
     if (start) {
       setEnd(!end);
     } else {
@@ -246,9 +277,7 @@ function InterviewEditCopy() {
             {/* <div className="w-[90%] h-[2px] bg-[#000000] mx-[4px]"></div> */}
 
             <ReceiverChat
-              Text={
-                "having different forms. Like method overloading and overriing are there in java"
-              }
+              Text={String(receiverChat)}
               editable={edit}
             />
 
@@ -258,7 +287,8 @@ function InterviewEditCopy() {
             >
               {/* <div className="basis-1/4 bg-[#ffab12]"></div> */}
               <div className=" ml-[9px]  flex flex-col justify-center">
-                <div className="basis-2/4 flex justify-center">
+                <div onClick={()=>onMicClick()}
+                className="basis-2/4 flex justify-center">
                   <img
                     className="relative  w-[40px] h-[40px]"
                     src="https://img.icons8.com/ios/50/microphone.png"
@@ -266,7 +296,7 @@ function InterviewEditCopy() {
                     style={{
                       padding: "10px",
                       borderRadius: "21px",
-                      background: "#ba8ccd",
+                      background: `${micColor}`,
                     }}
                   />
                 </div>
@@ -277,22 +307,23 @@ function InterviewEditCopy() {
                   flexGrow: "1",
                   overflowWrap: "anywhere",
                 }}
+                id="fun"
                 className=" outline-0 rounded-1  min-h-[50px] max-h-[125px] mx-[8px] my-auto bg-[#ffffff] overflow-auto"
                 role="textbox"
                 aria-multiline="true"
                 contenteditable="true"
               ></div>
 
-              <div className=" mr-[9px]  flex flex-col justify-center">
-                <div className="basis-2/4   ">
+              <div  className=" mr-[9px]  flex flex-col justify-center ">
+                <div className="basis-2/4   " onClick={(e)=>onSend()}>
                   <img
-                    className=" w-[40px] h-[40px]"
+                    className=" w-[40px] h-[40px] cursor-pointer hover:bg-[#19fff9] bg-[#63fd63]"
                     src="https://img.icons8.com/metro/50/sent.png"
                     alt="sent--v1"
                     style={{
                       padding: "10px",
                       borderRadius: "21px",
-                      background: "#63fd63",
+                      
                     }}
                   />
                 </div>

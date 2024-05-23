@@ -12,7 +12,7 @@ body {
 }
 
 input,
-btn {
+.btn {
   border: none;
   outline: none;
   background: none;

@@ -6,12 +6,13 @@ import { TextField, Button, CircularProgress } from "@mui/material"; // Import C
 import NewHomeBackgrounnd from "../components/newHome";
 import VisualizerCopy from "../components/Visualizeropy";
 import { useDispatch, useSelector } from "react-redux";
-import { interviewQuestion } from "../reducers/interviewReducer";
+import { getInterviewData, interviewQuestion } from "../reducers/interviewReducer";
 import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const speechsdk = require('microsoft-cognitiveservices-speech-sdk');
 
 const Main = () => {
+    const {interview_id}=useParams();
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
     const [speechRecognizer, setSpeechRecognizer] = useState(null);
     const [recognizedText, setRecognizedText] = useState('');
@@ -25,6 +26,7 @@ const Main = () => {
     const [scores, setScores] = useState(response.scores);
     const [data, setData] = useState(response);
     const dispatch = useDispatch();
+    let currentCount =0;
 
     useEffect(() => {
         return () => {
@@ -33,6 +35,10 @@ const Main = () => {
             }
         }
     }, [speechRecognizer]);
+    useEffect(()=>{
+        console.log(interview_id)
+        dispatch(getInterviewData(interview_id));
+    },[])
 
     async function sttFromMic() {
         const tokenObj = await getTokenOrRefresh();
@@ -91,16 +97,19 @@ const Main = () => {
     };
 
     const webcamRef = useRef(null);
+    const startData=useSelector((state)=>state.interview.interviewData);
 
     const handleSubmit = async (e) => {
+        console.log()
         e.preventDefault();
         setLoading(true);
         const req = {
             prevMessages: response.messages,
             answer: recognizedText,
             scores: scores,
-            name: "anshu",
-            skill: "Java"
+            name: startData.candidate_name,
+            skill: startData.skill_name,
+           
         };
         console.log(req);
         await dispatch(interviewQuestion(req));
@@ -108,22 +117,17 @@ const Main = () => {
         setRecognizedText("");
         setShowSpeakButton(true);
         setEditable(false);
+        currentCount+=1;
     };
 
     const handleEdit = () => {
         setEditable(true);
     };
-
     const startInterview = async () => {
-        setLoading(true); // Start loader
-        const req = {
-            name: "anshu",
-            skill: "Java",
-            
-        };
-        await dispatch(interviewQuestion(req));
+        setLoading(true);
+        await dispatch(interviewQuestion({name:startData.candidate_name,skill:startData.skill_name}));
         setLoading(false); 
-        setShowSpeakButton(true)// Stop loader
+        setShowSpeakButton(true)
         setInterviewStarted(true);
     };
     const navigate=useNavigate()

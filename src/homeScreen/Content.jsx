@@ -29,7 +29,7 @@ const Content = () => {
 
   return (
     <div className="w-screen h-screen z-[100]">
-      <div className="flex flex-col mt-[100px] md:mt-[200px] text-start px-3 md:px-6">
+      <div className="flex flex-col mt-[100px] md:mt-[200px] text-start px-3 md:px-6 ml-16">
         <h1 className="text-2xl md:text-5xl text-white font-semibold mb-4 z-[100]">
           Everythin you need to
         </h1>
@@ -46,7 +46,7 @@ const Content = () => {
         </div>
         <Link
           className="px-3 py-2 text-white border-blue-200 border-2 w-[150px] rounded-lg z-[100] hover:shadow-[4px_4px_1px_-0px_rgba(255,255,255,1)]"
-          to="/schedule"
+          to="/schedule/false"
         >
           Schedule Now
         </Link>

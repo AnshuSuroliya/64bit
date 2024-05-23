@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import NewHomeBackgrounnd from "../components/newHome";
 import { loginUser, registerUser } from "../reducers/authReducer";
 import "./NewAuth.css";
 
@@ -115,7 +116,11 @@ const NewAuth = () => {
   const signupResponse = useSelector((state) => state.auth.user);
 
   return (
-    <div className="mt-12">
+    <div className="mt-6">
+       <div className="fixed top-0 left-0 z-[-10]">
+                <NewHomeBackgrounnd/>
+            </div>
+      <Link className="text-3xl font-bold text-white" to="/">Doraemon</Link>
       <div className={`cont ${isSignUp ? "s--signup" : ""}`}>
         <form className="form sign-in" onSubmit={handleSubmit1} method="POST">
           <h2 className="mb-20">Welcome back,</h2>
@@ -137,7 +142,7 @@ const NewAuth = () => {
 
           <button
             type="submit"
-            className={`submit ${
+            className={`btn submit ${
               emailValid ? "opacity-50 btn cursor-not-allowed hover:none" : ""
             } `}
             disabled={emailValid}

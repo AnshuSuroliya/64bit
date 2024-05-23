@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useEffect} from "react";
+import { useDispatch } from "react-redux";
 import {useNavigate ,Link} from 'react-router-dom';
+import { logout } from "../reducers/authReducer";
 
 const NewNavbar = () => {
   const navigate = useNavigate();
@@ -8,7 +10,7 @@ const NewNavbar = () => {
   let index = 0;
   const [topActive, setTopActive] = useState(window.innerWidth >= 768);
   const [sideActive, setSideActive] = useState(false);
-
+  const dispatch=useDispatch()
   window.onresize = (e) => {
     if(topActive==true && window.innerWidth <= 768){
       setTopActive(false);
@@ -41,6 +43,10 @@ const NewNavbar = () => {
     setTimeout(() => {
       startanimating();
     }, 300);
+  }
+  const handleLogout=()=>{
+    dispatch(logout());
+    navigate("/");
   }
 
   return (
@@ -82,9 +88,13 @@ const NewNavbar = () => {
             <div className="w-0 ms-[35px] h-[2px] bg-gradient-to-r from-red-500 to-indigo-500 group-hover/baap:w-[80px] transition-all duration-400"></div>
           </div>
           <div className="my-[15px] w-[150px] text-lg text-white hover:cursor-pointer flex flex-col group/baap">
-            <button className="text-md group-hover/baap:text-xl transition-all duration-400">
-              Profile
-            </button>
+            {
+              localStorage.getItem("jwt") ?  <button className="text-md group-hover/baap:text-xl transition-all duration-400" onClick={handleLogout}>
+              Logout
+            </button> :
+            <Link to="/login" className="text-md group-hover/baap:text-xl transition-all duration-400">Login</Link>
+            }
+            
             <div className="w-0 ms-[40px] h-[2px] bg-gradient-to-r from-red-500 to-indigo-500 group-hover/baap:w-[70px] transition-all duration-400"></div>
           </div>
         </div>

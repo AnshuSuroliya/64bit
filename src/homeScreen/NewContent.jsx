@@ -8,7 +8,7 @@ return(
     <div className="w-full p-4 bg-white">
         <div className="w-full flex">
             <div className="w-6/12 ml-8">
-                <div className="text-3xl font-bold">What is Mockito?</div>
+                <div className="text-3xl font-bold">What is Doraemon?</div>
                 <p className="text-lg mt-2 w-11/12 text-justify items-left">Mockito is a AI based Interview platform. Interviewers can schedule the interviews for th candidates and it can be 
                 used by candidates also to give mock interviews on various technologies.</p>
             </div>

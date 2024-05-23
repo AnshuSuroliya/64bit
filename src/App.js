@@ -11,6 +11,8 @@ import Interview from './interviewScreen/Interview';
 import EditInterview from './interviewScreen/EditInterview';
 import Report from './reportPage/Report';
 import Main from './interviewScreen/Main';
+import ProtectedRoute from './ProtectedRoute';
+import AuthProtected from './AuthProtected';
 
 
 function App() {
@@ -19,19 +21,15 @@ function App() {
      <BrowserRouter>
      <Routes>
        <Route path='' element={<Home/>}/>
-       <Route path='/login' element={<Login/>}/>
-       <Route path='/signup' element={<Register/>}/>
-<<<<<<< HEAD
-       <Route path='/schedule' element={<Schedule/>}/>
-       <Route path='/interview' element={<Main/>}/>
-       <Route path='/report' element={<Report/>}/>
-=======
+       <Route element={<AuthProtected/>}>
+       <Route path='/login' element={<NewAuth/>}/>
+       </Route>
+       <Route element={<ProtectedRoute/>}>
        <Route path='/schedule/:mock' element={<Schedule/>}/>
-       <Route path='/interview' element={<NewInterview/>}/>
-       
->>>>>>> d580698b51cdae308b08828d21b56a2374320ea9
-       <Route path='/test' element={<Interview/>}/>
-       {/* <Route path="/new" element={<MainNew/>}/> */}
+       <Route path='/interview/:interview_id' element={<Main/>}/>
+       <Route path='/report' element={<Report/>}/>
+       </Route>
+       <Route path="/test" element={<EditInterview/>}/>
      </Routes>
      </BrowserRouter>
     </div>

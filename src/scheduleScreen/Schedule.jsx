@@ -18,7 +18,7 @@ const Schedule=()=>{
     const [interviewDuration,setInterviewDuration] =useState(20);
     const [currentWindow,setCurrentWindow] =useState("SkillList");
     const [skills,setSkill] =useState( [])
-
+    
 useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
 
     const options = [
@@ -66,6 +66,7 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
             method: 'post',
             url: 'http://127.0.0.1:8000/chk/IsQuestionReleveant',
             data: {"question": question , "skill":skillInput.name}
+            
             })
             console.log(data);
             if(data["isRelevant"]=="False" || data["isRelevant"]==false)questionError =true;
@@ -288,13 +289,17 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
         const {data} = await axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/interview/schedule',
-            data: req
+            data: req,
+            headers:{
+                "Authorization":`Bearer ${localStorage.getItem("jwt")}`,
+                "Content-Type":"application/json"
+            }
         })
 
         if(data=="False" || data==false){
             return;
         }else{
-           router("/") 
+           router("/interview/"+data["id"]) 
         }
     }
 

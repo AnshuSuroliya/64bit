@@ -1,6 +1,10 @@
 import React from "react";
 
 const SenderChat = ({ Text }) => {
+  if (!Text || Text.trim().length === 0) {
+    return <div></div>;
+  }
+
   return (
     <div className=" relative flex my-1 mb-3">
       <div className=" h-full ">

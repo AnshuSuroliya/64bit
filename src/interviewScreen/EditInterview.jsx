@@ -262,9 +262,43 @@ const EditInterview = () => {
                 aria-multiline="true"
                 contenteditable="true"
                 style={{ boxShadow: "#9c6aab 4px 3px 0px 1px" }}
-                className="outline-0 rounded-1  w-[90%] min-h-[50px] max-h-[125px] ml-[28px] mr-[8px] my-auto bg-[#ffffff] overflow-auto"
+                className="flex flex-row outline-0 relative  rounded-1 basis-[90%] w-[90%] min-h-[50px] max-h-[125px] ml-[28px] mr-[8px] my-auto bg-[#ffffff] overflow-auto"
               ></div>
-              s{/* <div className="basis-1/4 bg-[#ffab12]"></div> */}
+
+              <div class="h-100" style={{ flex: "0 0 20px", padding: "14px" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="25"
+                  height="25"
+                  viewBox="0,0,256,256"
+                  style={{ fill: "#000000" }}
+                >
+                  <g
+                    fill="#9ea9a9"
+                    fill-rule="nonzero"
+                    stroke="none"
+                    stroke-width="1"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="10"
+                    stroke-dasharray=""
+                    stroke-dashoffset="0"
+                    font-family="none"
+                    font-weight="none"
+                    font-size="none"
+                    text-anchor="none"
+                    style={{ mixBlendMode: "normal" }}
+                  >
+                    <g transform="scale(5.12,5.12)">
+                      <path d="M25,2c-12.683,0 -23,10.317 -23,23c0,12.683 10.317,23 23,23c12.683,0 23,-10.317 23,-23c0,-12.683 -10.317,-23 -23,-23zM37,26h-11v11h-2v-11h-11v-2h11v-11h2v11h11z"></path>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              {/* <div className="basis-1/4 bg-[#ffab12]"></div> */}
             </div>
           </div>
         </div>

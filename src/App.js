@@ -21,15 +21,9 @@ function App() {
        <Route path='' element={<Home/>}/>
        <Route path='/login' element={<Login/>}/>
        <Route path='/signup' element={<Register/>}/>
-<<<<<<< HEAD
-       <Route path='/schedule' element={<Schedule/>}/>
-       <Route path='/interview' element={<Main/>}/>
-       <Route path='/report' element={<Report/>}/>
-=======
        <Route path='/schedule/:mock' element={<Schedule/>}/>
        <Route path='/interview' element={<NewInterview/>}/>
        
->>>>>>> d580698b51cdae308b08828d21b56a2374320ea9
        <Route path='/test' element={<Interview/>}/>
        {/* <Route path="/new" element={<MainNew/>}/> */}
      </Routes>

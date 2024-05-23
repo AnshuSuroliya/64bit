@@ -1,6 +1,3 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { height } from "@mui/system";
-import { integerPropType } from "@mui/utils";
 import { useEffect, useState } from "react";
 import { useNavigate ,useParams} from "react-router-dom";
 import NewNavbar from "../components/NewNavbar.jsx";
@@ -19,38 +16,31 @@ const Schedule=()=>{
     const [currentWindow,setCurrentWindow] =useState("SkillList");
     const [skills,setSkill] =useState( [])
 
-useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
+    useEffect(()=>{setStartNow(mock);},[])
 
-    const options = [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React",
-        "Redux",
-        "Java",
-        "C++"
-    ];
+    const skillOptions = ["HTML","CSS","JavaScript","React","Redux","Java","C++"];
+    const expRange = [1,2,3,4,5,6,7,8,9,10];
+    const questionRange = [1,2,3,4,5,6,7];
 
     
     //NewSkillModal && UpdateSkilModal Starts Here-----------------
     const [question,setQuestion]=useState()
     const [newQuestion,setNewQuestion] =useState(false);
-    const [skillInput,setSkillInput]=useState({name:" ",experience:0,totalQuestion:3,questions:[] })
+    const [skillInput,setSkillInput]=useState({name:" ",experience:0,totalQuestion:5,questions:[] })
     const [currentIndex,setCurrentIndex]=useState(0);
 
     function verifyEmail(e) {
-        console.log(e.target.value);
         const display = document.querySelector("#emailError");
         if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]{2,6}$/.test(e.target.value)==false) {
-          display.hidden =false; console.log("incorrect");} else {
-          display.hidden=true; console.log("corret");
+          display.hidden =false;} else {
+          display.hidden=true;
         }
     }
 
     const changeExperience=(i)=>{
         if(skillInput.experience>=25 && i>0)return;
         if(skillInput.experience<=0 && i<0)return;
-        setSkillInput({name:skillInput.name,experience:skillInput.experience+i,questions:skillInput.questions});
+        setSkillInput({name:skillInput.name,experience:skillInput.experience+i,questions:skillInput.questions,totalQuestion:skillInput.totalQuestion});
     }
 
     const saveInLocalStorage=(temp)=>{
@@ -60,14 +50,13 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
 
     const addQuestion=async ()=>{
         let questionError = question==null || question.length<2
-
+        document.getElementById("questionErrorElement").hidden =true;
         try{
             const {data} = await axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/chk/IsQuestionReleveant',
             data: {"question": question , "skill":skillInput.name}
             })
-            console.log(data);
             if(data["isRelevant"]=="False" || data["isRelevant"]==false)questionError =true;
 
             if(questionError){
@@ -84,14 +73,14 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
         document.getElementById("questionErrorElement").hidden =true;
         let temp =skillInput;
         temp.questions.push({question:question});
+        if(temp.questions.length>temp.totalQuestion){temp.totalQuestion =temp.questions.length}
         setSkillInput(temp);
         setQuestion("");
         setNewQuestion(false);
     }
     
     const AddNewSkill=()=>{
-        console.log(skillInput)
-        let ShowError =skillInput.name.length<2;
+        let ShowError =skillInput.name.length<2 && skillInput.name!="Choose Skill";
 
         for(let i=0;i<skills.length;i++){
             if(skills[i].name==skillInput.name){ShowError=true;break;}
@@ -100,16 +89,12 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
         if(ShowError ){
             document.getElementById("SkillSelector").classList.add("border-red-400")
         return;
-        }
-
-        if(skillInput.questions.length!=0){skillInput.totalQuestion =skillInput.questions.length}
-
-        else{document.getElementById("SkillSelector").classList.remove("border-red-400")}
+        }else{document.getElementById("SkillSelector").classList.remove("border-red-400")}
        
         let temp = [...skills];
         temp.push(skillInput);
         setSkill(temp);
-        setSkillInput({name:"",experience:0,questions:[] });
+        setSkillInput({name:"",experience:0,questions:[],totalQuestion:5 });
         setQuestion("");
         setNewQuestion(false);
         setCurrentWindow("SkillList");
@@ -121,8 +106,9 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
         temp[currentIndex].name =skillInput.name;
         temp[currentIndex].experience=skillInput.experience;
         temp[currentIndex].questions =skillInput.questions;
+        temp[currentIndex].totalQuestion =skillInput.totalQuestion;
         setSkill(temp);
-        setSkillInput({name:"",experience:0,questions:[] });
+        setSkillInput({name:"",experience:0,questions:[] ,totalQuestion:5 });
         setQuestion("");
         setNewQuestion(false);
         setCurrentWindow("SkillList");
@@ -130,20 +116,19 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
     }
 
     const DeleteQuestion=(index)=>{
-        console.log(index);
         let temp = skillInput.questions;
         temp.splice(index,1);
-        setSkillInput({name:skillInput.name,experience:skillInput.experience,questions:temp});
+        setSkillInput({name:skillInput.name,experience:skillInput.experience,questions:temp,totalQuestion:skillInput.totalQuestion});
     }
    
     function newSkillModal() {
         return(
             <div id="skillInformationModal" className="ms-auto border-l-[1px] px-2 py-2 w-6/12 h-full flex flex-col">
-                <div className="flex mb-3">
-                    <div className="w-6/12 relative">
+                <div className="flex mb-3 flex-wrap">
+                    <div className="w-5/12 relative m-2">
                         <select id="SkillSelector" value={skillInput.name} onChange={(e)=>{setSkillInput({name:e.target.value,experience:skillInput.experience,questions:skillInput.questions});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
                             <option>Choose Skill</option>
-                            {options.map((option, index) => {
+                            {skillOptions.map((option, index) => {
                                 return (
                                     <option key={index}>
                                         {option}
@@ -154,11 +139,32 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
                         <p className="absolute -top-3 bg-white left-4 font-semibold text-gray-500">Skill</p>
                     </div>
                     
-                    <div className="flex relative ms-2 w-6/12 py-[3px] text-gray-400 border-[1px] border-gray-900 rounded-[4px] text-semibold focus:bg-gray-100">
-                        <button type="button" onClick={()=>changeExperience(-1)} type="button" className="border-red-500 border-2 my-auto h-[1px] w-[15px] mx-3"></button>
-                        <p className="mx-auto text-3xl">{skillInput.experience}</p>
-                        <button type="button"  onClick={()=>changeExperience(+1)} type="button" className=" my-auto ms-auto me-3 text-3xl text-green-500 font-bold">+</button>
-                        <p className="absolute -top-3 bg-white left-4 font-semibold text-sm text-gray-500">Experience(in Years)</p>
+                    <div className="w-5/12 m-2 relative">
+                        <select id="expSelector" value={skillInput.experience} onChange={(e)=>{setSkillInput({name:skillInput.name,experience:e.target.value,questions:skillInput.questions,totalQuestion:skillInput.totalQuestion});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
+                            
+                            {expRange.map((exp, index) => {
+                                return (
+                                    <option key={index}>
+                                        {exp}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                        <p className="absolute -top-3 bg-white left-4 font-semibold text-gray-500">Experience</p>
+                    </div>
+
+                    <div className="w-5/12 relative m-2">
+                        <select id="quesRange" value={skillInput.totalQuestion} onChange={(e)=>{setSkillInput({name:skillInput.name,experience:skillInput.experience,questions:skillInput.questions,totalQuestion:e.target.value});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
+                            
+                            {questionRange.map((qnc, index) => {
+                                return (
+                                    <option key={index}>
+                                        {qnc}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                        <p className="absolute -top-3 bg-white left-4 font-semibold text-gray-500">Total Questions</p>
                     </div>
                 </div>
 
@@ -200,11 +206,11 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
     function updateSkillModal() {
         return(
             <div id="skillInformationModal" className="ms-auto border-l-[1px] px-2 py-2 w-6/12 h-full flex flex-col">
-                <div className="flex mb-3">
-                    <div className="w-6/12 relative">
-                        <select id="SkillSelector" value={skillInput.name} onChange={(e)=>{setSkillInput({name:e.target.value,experience:skillInput.experience,questions:skillInput.questions});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
-                            <option>Choose Skill</option>
-                            {options.map((option, index) => {
+                <div className="flex mb-3 flex-wrap">
+                    <div className="w-5/12 relative m-2">
+                        <select id="SkillSelector" value={skillInput.name} onChange={(e)=>{setSkillInput({name:e.target.value,experience:skillInput.experience,questions:skillInput.questions,totalQuestion:skillInput.totalQuestion});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
+                        <option>Choose Skill</option>
+                            {skillOptions.map((option, index) => {
                                 return (
                                     <option key={index}>
                                         {option}
@@ -212,15 +218,35 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
                                 );
                             })}
                         </select>
-                        <p className="absolute -top-3 bg-white left-4 font-semibold text-gray-500">Skill</p>
                     </div>
-                    
-                    <div className="flex relative ms-2 w-6/12 py-[3px] text-gray-400 border-[1px] border-gray-900 rounded-[4px] text-semibold focus:bg-gray-100">
-                        <button type="button" onClick={()=>changeExperience(-1)} type="button" className="border-red-500 border-2 my-auto h-[1px] w-[15px] mx-3"></button>
-                        <p className="mx-auto text-3xl">{skillInput.experience}</p>
-                        <button type="button"  onClick={()=>changeExperience(+1)} type="button" className=" my-auto ms-auto me-3 text-3xl text-green-500 font-bold">+</button>
-                        <p className="absolute -top-3 bg-white left-4 font-semibold text-sm text-gray-500">Experience(in Years)</p>
+
+                    <div className="w-5/12 m-2 relative">
+                        <select id="expSelector" value={skillInput.experience} onChange={(e)=>{setSkillInput({name:skillInput.name,experience:e.target.value,questions:skillInput.questions,totalQuestion:skillInput.totalQuestion});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
+                            
+                            {expRange.map((exp, index) => {
+                                return (
+                                    <option key={index}>
+                                        {exp}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                        <p className="absolute -top-3 bg-white left-4 font-semibold text-gray-500">Experience</p>
                     </div>
+
+                    <div className="w-5/12 relative m-2">
+                        <select id="quesRange" value={skillInput.totalQuestion} onChange={(e)=>{setSkillInput({name:skillInput.name,experience:skillInput.experience,questions:skillInput.questions,totalQuestion:e.target.value});}} className="w-full ps-6 py-[9px] text-gray-400 border-[1px] border-gray-900 text-center rounded-[4px] text-xl text-semibold focus:bg-gray-100" >
+                            {questionRange.map((qnc, index) => {
+                                return (
+                                    <option key={index}>
+                                        {qnc}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                        <p className="absolute -top-3 bg-white left-4 font-semibold text-gray-500">Total questions</p>
+                    </div>
+
                 </div>
 
                 <div className="w-auto overflow-scroll mb-2">
@@ -259,14 +285,14 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
     // NewSkillModal && UpdateSkilModal Code Ends Here-------------------
 
     const GoToSkillListModal=()=>{
-        setSkillInput({name:"",experience:0,questions:[] });
+        setSkillInput({name:"",experience:0,questions:[] ,totalQuestion:5});
         setQuestion("");
         setNewQuestion(false);
         setCurrentWindow("SkillList");
     }
 
-    const goToUpdateSkillWindow=()=>{
-        setSkillInput({name:skills[currentIndex].name,experience:skills[currentIndex].experience,questions:skills[currentIndex].questions });
+    const goToUpdateSkillWindow=(index)=>{
+        setSkillInput({name:skills[index].name,experience:skills[index].experience,questions:skills[index].questions ,totalQuestion:skills[index].totalQuestion });
         setQuestion("");
         setNewQuestion(false);
         setCurrentWindow("UpdateSkill");
@@ -284,17 +310,15 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
             setStartTime(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0])
         }
         const req = { candidate_name:candidateName , candidate_email : candidateEmail , start_time:startTime , duration:interviewDuration,  skills};
-        console.log(req)
         const {data} = await axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/interview/schedule',
             data: req
         })
-
         if(data=="False" || data==false){
             return;
         }else{
-           router("/") 
+           router("/interview/"+data["id"]) 
         }
     }
 
@@ -307,7 +331,7 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
                             <div key={index} className="w-full flex bg-[#EDF6F9] rounded-[4px] px-3 py-2 mb-3">
                                 <div className="text-xl px-3 font-semibold">{skill["name"]}</div>
                                 <button type="button" onClick={()=>DeleteSkill(index)} className="ms-auto text-sm bg-red-300 rounded-full px-1 mx-2">🗑️</button>
-                                <button type="button" onClick={goToUpdateSkillWindow} className="text-sm bg-gray-50 rounded-full px-2">&#10148;</button>
+                                <button type="button" onClick={()=>{ goToUpdateSkillWindow(index)}} className="text-sm bg-gray-50 rounded-full px-2">&#10148;</button>
                             </div>
                     )})
                 }
@@ -339,7 +363,7 @@ useEffect(()=>{setStartNow(mock);console.log(startNow)},[])
                             {
                                 mock==="false"?
                                 <div className="flex w-full ">
-                                    <input type="datetime-local" className="px-3 w-3/4 py-2 me-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold disabled:text-gray-200 transition-all tracking-widest" value={startTime} onChange={(e)=>{setStartTime(e.target.value);console.log(e.target.value)}} />
+                                    <input type="datetime-local" className="px-3 w-3/4 py-2 me-2 mb-3 bg-[#EDF6F9] rounded-[4px] text-xl text-semibold disabled:text-gray-200 transition-all tracking-widest" value={startTime} onChange={(e)=>{setStartTime(e.target.value);}} />
                                 </div>
                                 :
                                 <></>

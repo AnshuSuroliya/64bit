@@ -13,7 +13,7 @@ import Visualizer from "../components/Visualizer";
 import NewHomeBackgrounnd from "../components/newHome";
 import Timer from "./Timer";
 
-const EditInterview = () => {
+function InterviewEditCopy() {
   const webcamRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
@@ -305,6 +305,6 @@ const EditInterview = () => {
       </div>
     </div>
   );
-};
+}
 
-export default EditInterview;
+export default InterviewEditCopy;
